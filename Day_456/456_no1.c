@@ -1,7 +1,6 @@
 // No.1 문자열 정수 뽑아 '정수'로 출력하기
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <stdlib.h>
 #include <malloc.h>
 
 int main() {
@@ -22,7 +21,10 @@ int main() {
                 printf("%d", (int)input[i]-48); // 정수형으로 출력
         }
         printf("\n\n");
+
+        free(input);
     }
+
 
     return 0;
 }
