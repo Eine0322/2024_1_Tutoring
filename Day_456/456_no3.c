@@ -18,7 +18,7 @@ int main() {
 	printf("m by n 입력 (m n): ");
 	scanf("%d %d", &m, &n);
 
-	// AT 배열 동적할당
+	// A 배열 동적할당
 	int** a = (int**)malloc(sizeof(int*) * m); 
 	for (int i = 0; i < m; i++) { 
 		a[i] = (int*)malloc(sizeof(int) * n);
@@ -43,7 +43,7 @@ int main() {
 	srand(time(0)); //난수 생성
 	for (int i = 0; i < m; i++) {
 		for (int j = 0; j < n; j++) {
-			a[i][j] = rand() % 201 - 100;
+			a[i][j] = rand() % 21 - 10;
 		}
 	}
 	// 배열 A transpose 저장

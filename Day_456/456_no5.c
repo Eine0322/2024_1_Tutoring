@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <malloc.h>
 
+// 제곱
 int squ(int a, int b) {
 	int result=1;
 	for (int i = 0; i < b; i++) {
@@ -19,6 +20,7 @@ int main() {
 	printf("변환 수 입력: ");
 	scanf("%d", &num);
 	int n = num;
+	// 길이 카운트, 각 요소 별 개수 파악
 	for (int i = 2; i >= 0; i--) {
 		jari = squ(10, i);
 		math[2-i] =(int)(num / jari)*jari;
@@ -41,8 +43,10 @@ int main() {
 		total_count += (count[2 - i][1] + count[2 - i][3] + 2*count[2-i][0] + 2*count[2-i][2]);
 	}
 
+	// 로마숫자 배열 동적할당
 	char* rom = (char*)malloc(sizeof(char) * total_count + 1);
 
+	// 순서대로 스택 쌓기
 	int stack = 0;
 	char ten, five, one;
 	for (int i = 0; i < 3; i++) {
@@ -75,5 +79,10 @@ int main() {
 		}
 	}
 	rom[stack] = '\0';
+
+	// 결과 출력
 	printf("%d=%d+%d+%d=%s, %d",n,math[0],math[1],math[2],rom,total_count);
+
+	// 배열 free
+	free(rom);
 }

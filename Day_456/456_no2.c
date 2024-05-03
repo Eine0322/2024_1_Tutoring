@@ -51,16 +51,15 @@ int main(void) {
 	srand(time(0));
 	int i;
 
+	printf("정렬 전 배열:\n");
 	for (i = 0; i < 20; i++) {
 		*(arr + i) = rand() % 201 - 100; //난수 생성, 배열 저장
-	}
-	for (i = 0; i < 20; i++) { // 정렬 전 배열 출력
-		printf("%d ", arr[i]);
+		printf("%d ", arr[i]); // 정렬 전 배열 출력
 	}
 
 	merge_sort(0, 19); // 병합정렬
 
-	printf("\n");
+	printf("\n\n정렬 후 배열:\n");
 	for (i = 0; i < 20; i++) { // 정렬된 배열 출력
 		printf("%d ", arr[i]);
 	}

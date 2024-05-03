@@ -28,11 +28,11 @@ void gauss(double** a, int n, int m, double* tmp) {
 	 // tmp 배열 동적할당
 	 double* tmp = (double*)malloc(sizeof(double) * n);
 
-	 srand(time(0)); //난수 생성 0-9
+	 srand(time(0)); //난수 생성 -10~10
 	 for (int i = 0; i < n; i++) {
 		 for (int j = 0; j < n; j++) {
-			 a[i][j] = rand() % 10;
-			 printf("%-3.0f ", a[i][j]);
+			 a[i][j] = rand() % 21-10;
+			 printf("%4.0f ", a[i][j]);
 		 }
 		 printf("\n");
 	 }
