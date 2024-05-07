@@ -1,3 +1,4 @@
+// No.1 최대, 최소, 평균 구하기
 #include <stdio.h>
 
 int main() {

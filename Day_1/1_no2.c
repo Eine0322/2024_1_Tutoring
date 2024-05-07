@@ -1,3 +1,4 @@
+// No 2. 대소문자 전환
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 
