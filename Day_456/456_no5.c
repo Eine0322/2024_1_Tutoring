@@ -1,88 +1,61 @@
-// No.5 로마숫자
+// No.5 로마숫자 변환
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <malloc.h>
 
-// 제곱
-int squ(int a, int b) {
-	int result=1;
-	for (int i = 0; i < b; i++) {
-		result *= a;
-	}
-	return result;
-}
-
 int main() {
-	int num,jari;
-	int count[3][4] = { 0 };
-	int math[3];
-	int total_count = 0;
+	int num;
 	printf("변환 수 입력: ");
 	scanf("%d", &num);
-	int n = num;
-	// 길이 카운트, 각 요소 별 개수 파악
-	for (int i = 2; i >= 0; i--) {
-		jari = squ(10, i);
-		math[2-i] =(int)(num / jari)*jari;
-		if (num >= 9* jari){
-			count[2 - i][0]++;
-			num %= 9 * jari;
-		}
-		else if (num >= 5 * jari) {
-			count[2 - i][1]++;
-			num %= 5 * jari;
-		}
-		else if (num >= 4 * jari) {
-			count[2 - i][2]++;
-			num %= 4 * jari;
-		}
-		else if (num>=1* jari) {
-			count[2-i][3] = num / (1 * jari);
-			num %= 1 * jari;
-		}
-		total_count += (count[2 - i][1] + count[2 - i][3] + 2*count[2-i][0] + 2*count[2-i][2]);
-	}
-
-	// 로마숫자 배열 동적할당
-	char* rom = (char*)malloc(sizeof(char) * total_count + 1);
-
-	// 순서대로 스택 쌓기
-	int stack = 0;
+	int num_save = num;
+	// 초기 rom 배열 동적할당
+	char* rom = (char*)malloc(sizeof(char) * 2);
+	int num_count[3];
 	char ten, five, one;
-	for (int i = 0; i < 3; i++) {
-		if (i == 0) { ten = 'M', five = 'D', one = 'C'; }
-		else if (i == 1) { ten = 'C', five = 'L', one = 'X'; }
-		else { ten = 'X', five = 'V', one = 'I'; }
-		for (int j = 0; j < 4; j++) {
-			if (count[i][j] != 0) {
-				if (j == 0) {
-					rom[stack] = one;
-					rom[stack + 1] = ten;
-					stack += 2;
-				}
-				else if (j == 1) {
-					rom[stack] = five;
-					stack++;
-				}
-				else if (j == 2) {
-					rom[stack] = one;
-					rom[stack+1] = five;
-					stack += 2;
-				}
-				else {
-					for (int k = 0; k < count[i][j]; k++) {
-						rom[stack] = one;
-						stack++;
-					}
-				}
-			}
+	int N=100;
+	int count = 1;
+	int rc = 0;
+	// 100, 10, 1 자리수 나눠 출력
+	for (int i = 0; i <= 2;i++) {
+		num_count[i] = num - (num % N);
+		// 단위 수 별 기호 지정
+		if (N == 100) { ten = 'M'; five = 'D'; one = 'C'; }
+		else if (N == 10) { ten = 'C'; five = 'L'; one = 'X'; }
+		else { ten = 'X'; five = 'V'; one = 'I'; }
+		// 동적할당 확장, 특수 숫자 채우기 (9,5,4)
+		if (num >= (9 * N)) {
+			count += 2;
+			rom= (char*)realloc(rom, sizeof(char) * count);
+			rom[rc++] = one;
+			rom[rc++] = ten;
+			num %= (9 * N);
 		}
+		else if (num >= (5 * N)) {
+			count += 1;
+			rom = (char*)realloc(rom, sizeof(char) * count);
+			rom[rc++] = five;
+			num %= (5 * N);
+		}
+		else if (num >= (4 * N)) {
+			count += 2;
+			rom = (char*)realloc(rom, sizeof(char) * count);
+			rom[rc++] = one;
+			rom[rc++] = five;
+			num %= (4 * N);
+		}
+		// 남은 숫자 나눠 작은 단위로 채우기
+		if (num>= N) {
+			count += (int)(num / (1 * N));
+			rom = (char*)realloc(rom, sizeof(char) * count);
+			for (int k = 0; k < (int)(num / (1 * N)); k++) {
+				rom[rc++] = one;
+			}
+			num %= N;
+		}
+		N /= 10;
 	}
-	rom[stack] = '\0';
-
-	// 결과 출력
-	printf("%d=%d+%d+%d=%s, %d",n,math[0],math[1],math[2],rom,total_count);
-
-	// 배열 free
+	// 공문자 삽입, 결과 출력
+	rom[count - 1] = '\0';
+	printf("%d=%d+%d+%d=%s, %d", num_save, num_count[0], num_count[1], num_count[2], rom, count-1);
 	free(rom);
 }
